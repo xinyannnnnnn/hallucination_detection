@@ -91,6 +91,7 @@ Analyzes the eigenvalue spectrum of generation distributions for uncertainty est
 
 ### 7. Lexical Similarity
 Measures consistency through lexical overlap across multiple generations using token-level n-gram analysis and self-BLEU computation.
+
 **Paper**: [Generating with Confidence: Uncertainty Quantification for Black-box Large Language Models](https://arxiv.org/abs/2305.19187)  
 **GitHub**: [zlin7/UQ-NLG](https://github.com/zlin7/UQ-NLG)
 
@@ -112,6 +113,7 @@ Detects distribution shifts in model representations as indicators of hallucinat
 
 ### 11. Perplexity-Based Detection
 Uses token-level and sequence-level perplexity along with relative model divergence (RMD) as simple baseline hallucination indicators.
+
 **Paper**: [Out-of-Distribution Detection and Selective Generation for Conditional Language Models](https://openreview.net/forum?id=kJUS5nD0vPB)  
 
 ## 🚀 Usage
@@ -292,25 +294,6 @@ Results reveal an unexpected hierarchy:
    - Smallest training set (1.4K) and test set (180 samples)
    - Ge'ez script with unique morphology
    - **Critical**: Essentially absent from model pretraining data
-
-### Practical Recommendations
-
-Based on actual results, recommendations must be language-conditional:
-
-**For Armenian-like languages (moderate low-resource, represented in pretraining)**:
-1. **Best choice**: Self-Evaluation or HaloScope (60-64% AUROC)
-2. **Backup**: LN Entropy or HalluShift (55-56% AUROC)
-3. **Avoid**: Semantic Entropy, Perplexity on LLaMA
-
-**For Basque-like languages (agglutinative, dialogue tasks)**:
-1. **Best choice**: Verbalize (64% on OPT) or HaloScope (57%)
-2. **Backup**: SelfCheckGPT (52-55%)
-3. **Avoid**: Lexical Similarity on OPT, Semantic Entropy
-
-**For Tigrinya-like languages (extremely low-resource, unique scripts)**:
-- ⚠️ **All current methods fail completely**
-- **Do not deploy** without language-specific model fine-tuning
-- Requires fundamental research breakthroughs (see Future Directions)
 
 ## 🙏 Acknowledgments
 
