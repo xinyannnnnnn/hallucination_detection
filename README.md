@@ -262,7 +262,7 @@ All 11 methods achieve exactly **50% AUROC on Tigrinya** (random chance), repres
 - HaloScope (model-internal states): 57-64% AUROC on Armenian
 - Methods designed for English consistently underperform on low-resource languages
 
-**Revised Understanding**:
+**Understanding**:
 - **Multilingual pretrained models are insufficient** for extremely low-resource languages
 - **Model-internal signals** may be more robust than semantic similarity in embedding space
 - **Language-specific tuning** is likely essential rather than optional
