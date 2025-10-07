@@ -1,0 +1,51 @@
+[submodule "datasets/tigrinya"]
+	path = datasets/tigrinya
+	url = https://github.com/hailaykidu/TigQA-Dataset.git
+[submodule "datasets/armenian"]
+	path = datasets/armenian
+	url = https://huggingface.co/datasets/gayaneghazaryan/SynDARin
+[submodule "datasets/basque"]
+	path = datasets/basque
+	url = https://huggingface.co/datasets/HiTZ/elkarhizketak
+[submodule "methods/hallushift"]
+	path = methods/hallushift
+	url = https://github.com/sharanya-dasgupta001/hallushift.git
+[submodule "methods/haloscope"]
+	path = methods/haloscope
+	url = https://github.com/deeplearning-wisc/haloscope.git
+[submodule "methods/ccs"]
+	path = methods/ccs
+	url = https://github.com/collin-burns/discovering_latent_knowledge.git
+[submodule "methods/verbalize"]
+	path = methods/verbalize
+	url = https://github.com/sylinrl/CalibratedMath.git
+[submodule "methods/selfcheckgpt"]
+	path = methods/selfcheckgpt
+	url = https://github.com/potsawee/selfcheckgpt.git
+[submodule "methods/eigenscore"]
+	path = methods/eigenscore
+	url = https://github.com/D2I-ai/eigenscore.git
+[submodule "methods/lexical_similarity"]
+	path = methods/lexical_similarity
+	url = https://github.com/zlin7/UQ-NLG.git
+[submodule "methods/semantic_entropy"]
+	path = methods/semantic_entropy
+	url = https://github.com/lorenzkuhn/semantic_uncertainty.git
+[submodule "methods/structured-uncertainty"]
+	path = methods/ln_entropy
+	url = https://github.com/KaosEngineer/structured-uncertainty.git
+[submodule "models/llama"]
+	path = models/llama
+	url = git@hf.co:meta-llama/Llama-2-7b-hf
+[submodule "models/opt"]
+	path = models/opt
+	url = https://huggingface.co/facebook/opt-6.7b
+[submodule "models/BLEURT-20"]
+	path = models/BLEURT-20
+	url = https://huggingface.co/lucadiliello/BLEURT-20
+[submodule "datasets/TigXLNet"]
+	path = datasets/TigXLNet
+	url = https://huggingface.co/abrhaleitela/TigXLNet
+[submodule "datasets/ArmTokenizer"]
+	path = datasets/ArmTokenizer
+	url = https://github.com/naymaraq/ArmTokenizer.git

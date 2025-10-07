@@ -1,0 +1,20 @@
+# LN Entropy method requirements
+# LN熵方法所需的依赖包
+
+# Core dependencies (already available in main environment)
+torch>=1.9.0
+transformers>=4.20.0
+numpy>=1.21.0
+scikit-learn>=1.0.0
+pandas>=1.3.0
+tqdm>=4.62.0
+
+# Optional dependencies for better performance
+# 可选依赖，用于提升性能
+sentence-transformers>=2.2.0  # For better multilingual embeddings
+pyarrow>=8.0.0  # For parquet file reading
+
+# Evaluation dependencies (already available)
+# 评估依赖（已在主环境中可用）
+bleurt-pytorch  # For ground truth evaluation
+rouge-score  # Alternative evaluation metric
