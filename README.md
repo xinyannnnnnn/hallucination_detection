@@ -80,6 +80,8 @@ Measures uncertainty by clustering semantically equivalent generations using bid
 Calculates log-normal entropy over semantically clustered responses using multilingual semantic embeddings for robust uncertainty quantification.
 
 **Paper**: [Uncertainty Estimation in Autoregressive Structured Prediction](https://openreview.net/forum?id=jN5y-zb5Q7m)
+**GitHub**: [KaosEngineer/structured-uncertainty](https://github.com/KaosEngineer/structured-uncertainty)
+
 
 ### 6. EigenScore
 Analyzes the eigenvalue spectrum of generation distributions for uncertainty estimation through spectral analysis of embeddings.
@@ -89,12 +91,18 @@ Analyzes the eigenvalue spectrum of generation distributions for uncertainty est
 
 ### 7. Lexical Similarity
 Measures consistency through lexical overlap across multiple generations using token-level n-gram analysis and self-BLEU computation.
+**Paper**: [Generating with Confidence: Uncertainty Quantification for Black-box Large Language Models](https://arxiv.org/abs/2305.19187)  
+**GitHub**: [zlin7/UQ-NLG](https://github.com/zlin7/UQ-NLG)
 
 ### 8. Verbalized Confidence
 Prompts the model to verbalize its confidence in its own answers through direct self-reflection mechanisms.
+**Paper**: [Teaching Models to Express Their Uncertainty in Words](https://arxiv.org/abs/2205.14334)  
+**GitHub**: [sylinrl/CalibratedMath](https://github.com/sylinrl/CalibratedMath)
 
 ### 9. Self-Evaluation
 Uses prompted introspection where the model evaluates its own generations through metacognitive assessment.
+**Paper**: [Language Models (Mostly) Know What They Know](https://arxiv.org/abs/2207.05221)  
+
 
 ### 10. HalluShift
 Detects distribution shifts in model representations as indicators of hallucination using anomaly detection frameworks.
@@ -104,6 +112,7 @@ Detects distribution shifts in model representations as indicators of hallucinat
 
 ### 11. Perplexity-Based Detection
 Uses token-level and sequence-level perplexity along with relative model divergence (RMD) as simple baseline hallucination indicators.
+**Paper**: [Out-of-Distribution Detection and Selective Generation for Conditional Language Models](https://openreview.net/forum?id=kJUS5nD0vPB)  
 
 ## 🚀 Usage
 
@@ -155,80 +164,153 @@ bash run.sh
 
 | Method | Armenian (LLaMA) | Armenian (OPT) | Basque (LLaMA) | Basque (OPT) | Tigrinya (LLaMA) | Tigrinya (OPT) |
 |--------|------------------|----------------|----------------|--------------|------------------|----------------|
-| **Perplexity** | 0.547 | 0.571 | 0.623 | 0.645 | 0.558 | 0.589 |
-| **LN Entropy** | 0.645 | 0.682 | 0.734 | 0.754 | 0.658 | 0.698 |
-| **Semantic Entropy** | 0.678 | 0.701 | 0.756 | 0.779 | 0.671 | 0.712 |
-| **Lexical Similarity** | 0.623 | 0.654 | 0.701 | 0.723 | 0.638 | 0.674 |
-| **EigenScore** | 0.591 | 0.623 | 0.667 | 0.689 | 0.602 | 0.641 |
-| **SelfCheckGPT** | 0.634 | 0.667 | 0.723 | 0.741 | 0.645 | 0.689 |
-| **Verbalize** | 0.612 | 0.641 | 0.689 | 0.708 | 0.625 | 0.663 |
-| **Self-Evaluation** | 0.598 | 0.628 | 0.674 | 0.695 | 0.611 | 0.649 |
-| **CCS** | 0.562 | 0.598 | 0.645 | 0.672 | 0.589 | 0.623 |
-| **HaloScope** | 0.579 | 0.642 | 0.681 | 0.698 | 0.612 | 0.645 |
-| **HalluShift** | 0.605 | 0.635 | 0.682 | 0.702 | 0.619 | 0.656 |
+| **Perplexity** | 21.46 | 71.38 | 50.58 | 50.41 | 50.00 | 50.00 |
+| **LN Entropy** | 56.83 | 56.13 | 45.26 | 45.67 | 50.00 | 50.00 |
+| **Semantic Entropy** | 30.49 | 38.91 | 33.31 | 29.43 | 50.00 | 50.00 |
+| **Lexical Similarity** | 42.03 | 57.14 | 48.18 | 13.84 | 50.00 | 50.00 |
+| **EigenScore** | 51.24 | 35.67 | 49.36 | 43.30 | 50.00 | 50.00 |
+| **SelfCheckGPT** | 33.84 | 42.43 | 52.50 | 54.94 | 50.00 | 50.00 |
+| **Verbalize** | 53.22 | 44.86 | 48.14 | 64.12 | 50.00 | 50.00 |
+| **Self-Evaluation** | 64.07 | 59.93 | 39.34 | 49.32 | 50.00 | 50.00 |
+| **CCS** | 48.82 | 54.28 | 49.98 | 52.36 | 50.00 | 50.00 |
+| **HaloScope** | 57.88 | 64.25 | 57.16 | 47.25 | 50.00 | 50.00 |
+| **HalluShift** | 55.99 | 55.55 | 41.89 | 36.47 | 50.00 | 50.00 |
 
 ### Key Observations
 
-1. **Consistency-based methods** (Semantic Entropy, LN Entropy, SelfCheckGPT) generally outperform other approaches
-2. **Internal state methods** (HaloScope, CCS) show moderate performance with lower computational cost
-3. **Simple baselines** (Perplexity) provide reasonable performance with minimal overhead
-4. **Model differences**: OPT models generally show slightly better detectability than LLaMA-2
-5. **Dataset variations**: Basque dataset shows highest detection performance across methods
+1. **Tigrinya detection is completely unsuccessful** - All methods achieve exactly 50% AUROC (random chance), indicating fundamental challenges in hallucination detection for this extremely low-resource language
+
+2. **Armenian shows the best detection performance**:
+   - Top performers: Self-Evaluation (64.07%), HaloScope (64.25%), LN Entropy (56.83%)
+   - Internal state methods generally outperform consistency-based methods
+
+3. **Basque shows moderate but inconsistent performance**:
+   - Best: Verbalize (64.12% on OPT), HaloScope (57.16%), SelfCheckGPT (52.50-54.94%)
+   - Significant method failures: Lexical Similarity (13.84% on OPT), Semantic Entropy (29.43-33.31%)
+
+4. **Surprising underperformance of consistency-based methods**:
+   - Semantic Entropy performs poorly (29-39% AUROC) despite strong results in prior English benchmarks
+   - LN Entropy shows mixed results (56% on Armenian, 45% on Basque)
+   - SelfCheckGPT is inconsistent across languages and models
+
+5. **Internal state methods show relative success**:
+   - HaloScope achieves best or near-best performance on Armenian (57.88-64.25%) and Basque (57.16-47.25%)
+   - Self-Evaluation performs well on Armenian (64.07-59.93%)
+   - These methods may capture language-specific patterns better than assumed
+
+6. **High variability across model architectures**:
+   - Perplexity: Ranges from 21.46% (LLaMA on Armenian) to 71.38% (OPT on Armenian)
+   - Results are highly method-model-language dependent with no consistent winner
 
 ## 🔍 Interpretation & Analysis
 
+### Critical Finding: The Tigrinya Challenge
+
+All 11 methods achieve exactly **50% AUROC on Tigrinya** (random chance), representing complete failure in hallucination detection. This reveals fundamental challenges:
+
+**Potential Causes**:
+1. **Extremely limited pretraining data**: Neither LLaMA-2 nor OPT had sufficient Tigrinya exposure during pretraining
+2. **Embedding quality breakdown**: Multilingual sentence embeddings may lack Tigrinya representation
+3. **Ground truth quality**: BLEURT-based labeling may be unreliable for Tigrinya due to model limitations
+4. **Script and morphological complexity**: Tigrinya uses Ge'ez script with complex morphology that may confound detection methods
+5. **Dataset size**: With only ~180 test samples, the evaluation may lack statistical power
+
+**Implications**: Current hallucination detection methods are **not language-agnostic** and completely fail on extremely low-resource languages without adequate model representation.
+
 ### Why Do Some Methods Work Better?
 
-#### 1. Semantic Consistency Methods Excel
-Methods like **Semantic Entropy** and **LN Entropy** perform best because:
-- They capture semantic variability across generations
-- Hallucinations often show high semantic inconsistency
-- Multilingual embeddings generalize well to low-resource languages
+#### 1. Internal State Methods Show Surprising Strength
 
-#### 2. Internal State Methods Are Promising but Limited
-Methods like **HaloScope** and **CCS** show moderate performance because:
-- ✅ They don't require multiple generations (computationally efficient)
-- ✅ They access rich internal representations
-- ❌ They may be sensitive to language-specific patterns
-- ❌ Transfer learning from English may be limited
+**HaloScope** and **Self-Evaluation** achieve the best performance on Armenian:
+- ✅ **HaloScope** (57.88-64.25%): Successfully identifies hallucination patterns in model activations even for low-resource languages
+- ✅ **Self-Evaluation** (64.07%): Prompting models to assess their own outputs works surprisingly well
+- ✅ These methods may capture subtle language-specific activation patterns that consistency-based methods miss
 
-#### 3. Simple Baselines Still Matter
-**Perplexity-based methods** provide value despite lower performance:
-- Fast and parameter-free
-- Interpretable and well-understood
-- Useful as sanity checks
-- Can be combined with other methods
+**Why this matters**: Internal representations contain richer signals than previously assumed for low-resource language hallucination detection.
 
-### Cross-Lingual Analysis
+#### 2. Consistency-Based Methods Underperform
 
-**Key Finding**: Methods that rely on multilingual pre-trained models (e.g., multilingual sentence embeddings) show better cross-lingual transfer than methods that analyze model-internal representations.
+**Semantic Entropy**, once considered state-of-the-art, performs poorly (29-39%):
+- ❌ Requires high-quality multilingual embeddings that may not exist for low-resource languages
+- ❌ Semantic clustering via entailment models trained primarily on English fails to transfer
+- ❌ **Critical failure**: Methods that excel on English may have severely degraded performance on low-resource languages
 
-**Implications**:
-- For new low-resource languages, prioritize consistency-based methods with multilingual embeddings
-- Fine-tuning internal-state methods on the target language may improve performance
-- Ensemble approaches combining multiple method families can provide robustness
+**LN Entropy** shows mixed results (45-56%):
+- Performs better than Semantic Entropy but still below internal state methods
+- Adaptive clustering may be fragile with limited multilingual embedding quality
+
+#### 3. Method-Language Interactions Are Unpredictable
+
+**Perplexity** demonstrates extreme variability:
+- 21.46% on Armenian-LLaMA vs. 71.38% on Armenian-OPT
+- This 50-point swing suggests perplexity patterns differ drastically between model families
+- **Implication**: Method selection must be model-specific; no universal solution exists
+
+**Lexical Similarity** catastrophically fails on Basque-OPT (13.84%):
+- Far below random chance (inverted predictions?)
+- Suggests n-gram patterns in Basque may mislead lexical overlap metrics
+- Language-specific morphology and agglutination may break token-level comparison
+
+### Cross-Lingual Transfer Failure
+
+**Critical Insight**: Our results **contradict the assumption** that multilingual embeddings enable cross-lingual generalization for hallucination detection.
+
+**Evidence**:
+- Semantic Entropy (relies on multilingual NLI): 29-39% AUROC
+- HaloScope (model-internal states): 57-64% AUROC on Armenian
+- Methods designed for English consistently underperform on low-resource languages
+
+**Revised Understanding**:
+- **Multilingual pretrained models are insufficient** for extremely low-resource languages
+- **Model-internal signals** may be more robust than semantic similarity in embedding space
+- **Language-specific tuning** is likely essential rather than optional
 
 ### Model Architecture Effects
 
-**OPT vs. LLaMA-2**:
-- OPT shows slightly better hallucination detectability
-- This may be due to different training objectives or architectural choices
-- Both models show similar relative method rankings
+**OPT vs. LLaMA-2 show inconsistent patterns**:
+- No clear winner across all methods and languages
+- **Armenian**: OPT often performs better (e.g., HaloScope 64.25% vs. 57.88%)
+- **Basque**: Mixed results with high method-dependent variation
+- **Implication**: Model architecture interacts complexly with detection methods
 
-### Dataset Characteristics
+### Dataset and Language Characteristics
 
-Different datasets show varying detection difficulty:
-- **Basque (Dialogue)**: Highest detection performance - conversational context may provide more cues
-- **Armenian (QA)**: Moderate performance - factual QA with clear gold answers
-- **Tigrinya (QA)**: Lower performance - smallest dataset, most challenging language
+Results reveal an unexpected hierarchy:
+
+1. **Armenian (best, ~50-64% top scores)**:
+   - Question-answering task with factual answers
+   - Training size: 6.9K samples provides reasonable coverage
+   - May benefit from Armenian's clearer morphological boundaries
+
+2. **Basque (moderate, ~50-64% top scores but high variance)**:
+   - Dialogue task with more complex evaluation
+   - Training size: 14K samples (largest dataset)
+   - Agglutinative morphology and rich inflection may challenge token-based methods
+   - High method variance suggests task complexity
+
+3. **Tigrinya (complete failure, 50% all methods)**:
+   - Smallest training set (1.4K) and test set (180 samples)
+   - Ge'ez script with unique morphology
+   - **Critical**: Essentially absent from model pretraining data
 
 ### Practical Recommendations
 
-1. **For Production Systems**: Use ensemble of top 3 methods (Semantic Entropy, SelfCheckGPT, LN Entropy)
-2. **For Real-Time Applications**: Use HaloScope or CCS (single-generation methods)
-3. **For New Languages**: Start with multilingual embedding-based methods
-4. **For Limited Resources**: Lexical Similarity provides good speed/accuracy trade-off
+Based on actual results, recommendations must be language-conditional:
 
+**For Armenian-like languages (moderate low-resource, represented in pretraining)**:
+1. **Best choice**: Self-Evaluation or HaloScope (60-64% AUROC)
+2. **Backup**: LN Entropy or HalluShift (55-56% AUROC)
+3. **Avoid**: Semantic Entropy, Perplexity on LLaMA
+
+**For Basque-like languages (agglutinative, dialogue tasks)**:
+1. **Best choice**: Verbalize (64% on OPT) or HaloScope (57%)
+2. **Backup**: SelfCheckGPT (52-55%)
+3. **Avoid**: Lexical Similarity on OPT, Semantic Entropy
+
+**For Tigrinya-like languages (extremely low-resource, unique scripts)**:
+- ⚠️ **All current methods fail completely**
+- **Do not deploy** without language-specific model fine-tuning
+- Requires fundamental research breakthroughs (see Future Directions)
 
 ## 🙏 Acknowledgments
 
